@@ -100,3 +100,6 @@ idle.scale((250,400))
 walkLeft.scale((250,400))
 repukken_projectile.scale((150,250))
 stage_idle.scale((1350,700))
+
+
+print('Hola Mundo XDDDD')
