@@ -9,7 +9,7 @@ clock = pygame.time.Clock()
 run = True
 win = pygame.display.set_mode((1350,700))
 size = width ,height = 1350,700
-left, right, attack_1, attack_1_projectile, attack_2, busy = False, False, False, False, False, False
+left, right, attack_1, attack_1_projectile, attack_2, crouch, busy = False, False, False, False, False, False, False
 x = 500
 y = 240
 x_projectile = x + 185 
@@ -38,6 +38,13 @@ class fighter:
     def idle(self,x_pos,y_pos):
         anim.idle.play()
         anim.idle.blit(win,(x_pos,y_pos))
+    def crouch(self,x_pos,y_pos):
+        anim.crouch.loop = False
+        if anim.crouch.currentFrameNum == 3:
+            anim.crouch.pause()
+        else:
+            anim.crouch.play()
+        anim.crouch.blit(win,(x_pos,y_pos+50))
     def attack_projectile_1(self,x_pos,y_pos):
         anim.repukken.loop = False        
         anim.repukken.play()
@@ -58,6 +65,8 @@ def redrawGameWindow():
         senshi.walkLeft(x,y)
     elif right:
         senshi.walkRight(x,y)
+    elif crouch:
+        senshi.crouch(x,y)
     elif attack_1: 
         senshi.attack_projectile_1(x,y) 
     elif attack_2:  
@@ -78,6 +87,10 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_DOWN:
+                crouch = False
+                anim.crouch.elapsed = 0
 
     keys = pygame.key.get_pressed()
 
@@ -85,6 +98,7 @@ while run:
         x_change = 0
         right = False
         left = False
+        crouch = False
     else:
         if keys[pygame.K_LEFT] :
             x_change = -10 
@@ -94,11 +108,16 @@ while run:
             x_change = 10
             left = False
             right = True
+        elif keys[pygame.K_DOWN] :
+            x_change = 0
+            left = False
+            right = False
+            crouch = True
         elif keys[pygame.K_a] :
             x_change = 0
             attack_1 = True
             busy = True
-        elif keys[pygame.K_d] :
+        elif keys[pygame.K_f] :
             x_change = 0
             attack_2 = True
             busy = True
@@ -106,6 +125,7 @@ while run:
             x_change = 0
             right = False
             left = False
+            crouch = False
             
     
     if anim.repukken.isFinished():

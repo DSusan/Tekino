@@ -87,6 +87,12 @@ walkLeft = pyganim.PygAnimation(
     ('rugal/rugal_20-6.png', 200),
     ('rugal/rugal_20-7.png', 200)])
 
+crouch = pyganim.PygAnimation(
+   [('rugal_scaled/rugal_11-0.png', 35),
+    ('rugal_scaled/rugal_11-1.png', 35),
+    ('rugal_scaled/rugal_11-2.png', 35),
+    ('rugal_scaled/rugal_11-3.png', 35)])
+
 idle = pyganim.PygAnimation(
    [('rugal/rugal_0-0.png', 200),
     ('rugal/rugal_0-1.png', 200),
