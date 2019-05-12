@@ -1,2 +1,2 @@
 #!/bin/zsh
-mkdir tmp; for f in ./*.png; do pngfix --strip=color --out=tmp/"$f" "$f"
+mkdir tmp; for f in ./*.png; do pngfix --strip=color --out=tmp/"$f" "$f"; done
