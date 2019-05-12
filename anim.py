@@ -12,6 +12,18 @@ stage_idle = pyganim.PygAnimation(
     ('imagenes/stage_6.gif', 200),
     ('imagenes/stage_7.gif', 200)])
 #1060
+punch_1 = pyganim.PygAnimation(
+   [('rugal_scaled/rugal_210-0.png', 70),
+    ('rugal_scaled/rugal_210-1.png', 70),
+    ('rugal_scaled/rugal_210-2.png', 70),
+    ('rugal_scaled/rugal_210-3.png', 70),
+    ('rugal_scaled/rugal_210-4.png', 70),
+    ('rugal_scaled/rugal_210-5.png', 70),
+    ('rugal_scaled/rugal_210-6.png', 70),
+    ('rugal_scaled/rugal_210-7.png', 80),
+    ('rugal_scaled/rugal_210-8.png', 80),
+    ('rugal_scaled/rugal_210-9.png', 60)])
+    
 repukken = pyganim.PygAnimation(
    [('rugal_scaled/rugal_1000-0.png', 125),
     ('rugal_scaled/rugal_1000-1.png', 90),

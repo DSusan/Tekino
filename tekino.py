@@ -9,7 +9,7 @@ clock = pygame.time.Clock()
 run = True
 win = pygame.display.set_mode((1350,700))
 size = width ,height = 1350,700
-left, right, attack_1, attack_1_projectile, attack_2, crouch, busy = False, False, False, False, False, False, False
+left, right, attack_1, attack_1_projectile, attack_2, attack_3, crouch, busy = False, False, False, False, False, False, False, False
 x = 500
 y = 240
 x_projectile = x + 185 
@@ -18,41 +18,49 @@ x_change = 0
 t_elapsed = 0
 
 class projectile:
-    def move(self,x_pos,y_pos):
+    def __init__(self):
         anim.repukken_projectile.loop = False
+    def move(self,x_pos,y_pos):
         anim.repukken_projectile.play()
         anim.repukken_projectile.blit(win,(x_pos,y_pos))
 
 class backround:
-    def idle(self):
+    def __init__(self):
         anim.stage_idle.play()
+    def idle(self):
         anim.stage_idle.blit(win,(0,0))
 
 class fighter:
-    def walkLeft(self,x_pos,y_pos):
+    def __init__(self):
+        anim.crouch.loop = False
         anim.walkLeft.play()
+        anim.walkRight.play()
+        anim.idle.play()
+        anim.repukken.loop = False
+        anim.cutter.loop = False
+        anim.punch_1.loop = False
+        
+    def walkLeft(self,x_pos,y_pos):
         anim.walkLeft.blit(win,(x_pos,y_pos))
     def walkRight(self,x_pos,y_pos):
-        anim.walkRight.play()
         anim.walkRight.blit(win,(x_pos,y_pos))
     def idle(self,x_pos,y_pos):
-        anim.idle.play()
         anim.idle.blit(win,(x_pos,y_pos))
     def crouch(self,x_pos,y_pos):
-        anim.crouch.loop = False
         if anim.crouch.currentFrameNum == 3:
             anim.crouch.pause()
         else:
             anim.crouch.play()
         anim.crouch.blit(win,(x_pos,y_pos+50))
     def attack_projectile_1(self,x_pos,y_pos):
-        anim.repukken.loop = False        
         anim.repukken.play()
         anim.repukken.blit(win,(x_pos,y_pos-100))
     def attack_kick_1(self,x_pos,y_pos):
-        anim.cutter.loop = False
         anim.cutter.play()
         anim.cutter.blit(win,(x_pos,y_pos-100))
+    def attack_punch_1(self,x_pos,y_pos):
+        anim.punch_1.play()
+        anim.punch_1.blit(win,(x_pos,y_pos))
 
 senshi = fighter()
 stage = backround()
@@ -70,7 +78,9 @@ def redrawGameWindow():
     elif attack_1: 
         senshi.attack_projectile_1(x,y) 
     elif attack_2:  
-        senshi.attack_kick_1(x,y)    
+        senshi.attack_kick_1(x,y) 
+    elif attack_3:
+        senshi.attack_punch_1(x,y)   
     else:
         senshi.idle(x,y)
 
@@ -117,6 +127,10 @@ while run:
             x_change = 0
             attack_1 = True
             busy = True
+        elif keys[pygame.K_s] :
+            x_change = 0
+            attack_3 = True
+            busy = True
         elif keys[pygame.K_f] :
             x_change = 0
             attack_2 = True
@@ -144,6 +158,11 @@ while run:
     if anim.cutter.isFinished():
         anim.cutter.elapsed = 0
         attack_2 = False
+        busy = False
+    
+    if anim.punch_1.isFinished():
+        anim.punch_1.elapsed = 0
+        attack_3 = False
         busy = False
 
     x += x_change
