@@ -109,6 +109,24 @@ while run:
         right = False
         left = False
         crouch = False
+        if anim.repukken.isFinished():
+            attack_1 = False
+            anim.repukken.elapsed = 0
+        if anim.repukken.currentFrameNum > 5:
+            attack_1_projectile =True
+        if anim.repukken_projectile.isFinished():
+            attack_1_projectile = False
+            x_projectile = x + 185
+            anim.repukken_projectile.elapsed = 0
+            busy = False
+        if anim.cutter.isFinished():
+            anim.cutter.elapsed = 0
+            attack_2 = False
+            busy = False
+        if anim.punch_1.isFinished():
+            anim.punch_1.elapsed = 0
+            attack_3 = False
+            busy = False
     else:
         if keys[pygame.K_LEFT] :
             x_change = -10 
@@ -141,29 +159,6 @@ while run:
             left = False
             crouch = False
             
-    
-    if anim.repukken.isFinished():
-        attack_1 = False
-        anim.repukken.elapsed = 0
-    
-    if anim.repukken.currentFrameNum > 5:
-        attack_1_projectile =True
-
-    if anim.repukken_projectile.isFinished():
-        attack_1_projectile = False
-        x_projectile = x + 185
-        anim.repukken_projectile.elapsed = 0
-        busy = False
-
-    if anim.cutter.isFinished():
-        anim.cutter.elapsed = 0
-        attack_2 = False
-        busy = False
-    
-    if anim.punch_1.isFinished():
-        anim.punch_1.elapsed = 0
-        attack_3 = False
-        busy = False
 
     x += x_change
     if x_change:
