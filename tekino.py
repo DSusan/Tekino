@@ -9,7 +9,7 @@ clock = pygame.time.Clock()
 run = True
 win = pygame.display.set_mode((1350,700))
 size = width ,height = 1350,700
-left, right, attack_1, attack_1_projectile, attack_2, attack_3, crouch, busy = False, False, False, False, False, False, False, False
+left, right, attack_1, attack_1_projectile, attack_2, attack_3, attack_4, crouch, busy = False, False, False, False, False, False, False, False, False
 x = 500
 y = 240
 x_projectile = x + 185 
@@ -39,6 +39,7 @@ class fighter:
         anim.repukken.loop = False
         anim.cutter.loop = False
         anim.punch_1.loop = False
+        anim.kick_1.loop = False
         
     def walkLeft(self,x_pos,y_pos):
         anim.walkLeft.blit(win,(x_pos,y_pos))
@@ -58,6 +59,9 @@ class fighter:
     def attack_kick_1(self,x_pos,y_pos):
         anim.cutter.play()
         anim.cutter.blit(win,(x_pos,y_pos-100))
+    def attack_kick_2(self,x_pos,y_pos):
+        anim.kick_1.play()
+        anim.kick_1.blit(win,(x_pos,y_pos))
     def attack_punch_1(self,x_pos,y_pos):
         anim.punch_1.play()
         anim.punch_1.blit(win,(x_pos,y_pos))
@@ -80,7 +84,9 @@ def redrawGameWindow():
     elif attack_2:  
         senshi.attack_kick_1(x,y) 
     elif attack_3:
-        senshi.attack_punch_1(x,y)   
+        senshi.attack_punch_1(x,y) 
+    elif attack_4:
+        senshi.attack_kick_2(x,y)  
     else:
         senshi.idle(x,y)
 
@@ -92,7 +98,7 @@ def redrawGameWindow():
 
 while run:
 
-    clock.tick(30)
+    clock.tick(29)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -127,6 +133,10 @@ while run:
             anim.punch_1.elapsed = 0
             attack_3 = False
             busy = False
+        if anim.kick_1.isFinished():
+            anim.kick_1.elapsed = 0
+            attack_4 = False
+            busy = False
     else:
         if keys[pygame.K_LEFT] :
             x_change = -10 
@@ -148,6 +158,10 @@ while run:
         elif keys[pygame.K_s] :
             x_change = 0
             attack_3 = True
+            busy = True
+        elif keys[pygame.K_d] :
+            x_change = 0
+            attack_4 = True
             busy = True
         elif keys[pygame.K_f] :
             x_change = 0

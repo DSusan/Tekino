@@ -15,15 +15,26 @@ stage_idle = pyganim.PygAnimation(
 punch_1 = pyganim.PygAnimation(
    [('rugal_scaled/rugal_210-0.png', 70),
     ('rugal_scaled/rugal_210-1.png', 70),
-    ('rugal_scaled/rugal_210-2.png', 70),
-    ('rugal_scaled/rugal_210-3.png', 70),
-    ('rugal_scaled/rugal_210-4.png', 70),
-    ('rugal_scaled/rugal_210-5.png', 70),
-    ('rugal_scaled/rugal_210-6.png', 70),
-    ('rugal_scaled/rugal_210-7.png', 80),
-    ('rugal_scaled/rugal_210-8.png', 80),
-    ('rugal_scaled/rugal_210-9.png', 60)])
-    
+    ('rugal_scaled/rugal_210-2.png', 50),
+    ('rugal_scaled/rugal_210-3.png', 50),
+    ('rugal_scaled/rugal_210-4.png', 50),
+    ('rugal_scaled/rugal_210-5.png', 50),
+    ('rugal_scaled/rugal_210-6.png', 200),
+    ('rugal_scaled/rugal_210-7.png', 70),
+    ('rugal_scaled/rugal_210-8.png', 70),
+    ('rugal_scaled/rugal_210-9.png', 70)])
+
+kick_1 = pyganim.PygAnimation(
+   [('rugal_scaled/rugal_235-0.png', 70),
+    ('rugal_scaled/rugal_235-1.png', 70),
+    ('rugal_scaled/rugal_235-2.png', 50),
+    ('rugal_scaled/rugal_235-3.png', 100),
+    ('rugal_scaled/rugal_235-4.png', 100),
+    ('rugal_scaled/rugal_235-5.png', 50),
+    ('rugal_scaled/rugal_235-6.png', 50),
+    ('rugal_scaled/rugal_235-7.png', 70),
+    ('rugal_scaled/rugal_235-8.png', 70)])
+
 repukken = pyganim.PygAnimation(
    [('rugal_scaled/rugal_1000-0.png', 125),
     ('rugal_scaled/rugal_1000-1.png', 90),
