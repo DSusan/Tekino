@@ -101,14 +101,14 @@ repukken_projectile = pyganim.PygAnimation(
     ('rugal/rugal_4140-11.png', 70)])
 
 walkLeft = pyganim.PygAnimation(
-   [('rugal_scaled/rugal_20-0.png', 200),
-    ('rugal_scaled/rugal_20-1.png', 200),
-    ('rugal_scaled/rugal_20-2.png', 200),
-    ('rugal_scaled/rugal_20-3.png', 200),
-    ('rugal_scaled/rugal_20-4.png', 200),
-    ('rugal_scaled/rugal_20-5.png', 200),
-    ('rugal_scaled/rugal_20-6.png', 200),
-    ('rugal_scaled/rugal_20-7.png', 200)])
+   [('rugal_scaled/rugal_20-0 copy.png', 200),
+    ('rugal_scaled/rugal_20-1 copy.png', 200),
+    ('rugal_scaled/rugal_20-2 copy.png', 200),
+    ('rugal_scaled/rugal_20-3 copy.png', 200),
+    ('rugal_scaled/rugal_20-4 copy.png', 200),
+    ('rugal_scaled/rugal_20-5 copy.png', 200),
+    ('rugal_scaled/rugal_20-6 copy.png', 200),
+    ('rugal_scaled/rugal_20-7 copy.png', 200)])
 
 crouch = pyganim.PygAnimation(
    [('rugal_scaled/rugal_11-0.png', 35),
@@ -128,3 +128,6 @@ walkRight = walkLeft
 idle.scale((250,400))
 repukken_projectile.scale((150,250))
 stage_idle.scale((1350,700))
+
+walkLeft.flip(True,False)
+walkRight.flip(True,False)
