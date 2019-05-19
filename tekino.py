@@ -39,10 +39,16 @@ class projectile2:
         anim2.repukken_projectile.blit(win,(x_pos,y_pos))
 
 class backround:
+    z=0
     def __init__(self):
         anim.stage_idle.play()
     def idle(self):
-        anim.stage_idle.blit(win,(0,0))
+        rel_z= self.z % anim.bckg[0]
+        anim.stage_idle.blit(win,(rel_z - anim.bckg[0] ,0))
+        # 1800-1350 = 450
+        if (rel_z < size[0]+450):
+            anim.stage_idle.blit(win,(rel_z-450,0))
+        self.z-=1
 
 class fighter:
     def __init__(self):
