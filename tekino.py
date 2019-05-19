@@ -3,6 +3,7 @@ import pyganim
 import anim
 import anim2
 from pygame_functions import *
+#testing VSCODE GIT
 pygame.init()
 pygame.display.set_caption("Tekino")
 
