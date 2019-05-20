@@ -271,7 +271,7 @@ while run:
             attack_1_projectile_2 =True
         if anim2.repukken_projectile.isFinished():
             attack_1_projectile_2 = False
-            x2_projectile = x2 - 185
+            x_projectile2 = x2 - 185
             anim2.repukken_projectile.elapsed = 0
             busy_2 = False
         if anim2.cutter.isFinished():
