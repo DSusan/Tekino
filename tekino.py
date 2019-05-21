@@ -25,6 +25,7 @@ x_change = 0
 x2_change = 0
 t_elapsed = 0
 
+
 senshi = fighter()
 senshi2  = fighter2()
 stage = backround()
@@ -32,7 +33,7 @@ projectile_ = projectile()
 projectile_2 = projectile2()
 
 def redrawGameWindow():
-    global x_projectile, x_projectile2
+    global x_projectile, x_projectile2, x, x2
     stage.idle()
     if left:
         senshi.walkLeft(x,y)
@@ -43,11 +44,16 @@ def redrawGameWindow():
     elif attack_1: 
         senshi.attack_projectile_1(x,y) 
     elif attack_2:  
-        senshi.attack_kick_1(x,y) 
+        senshi.attack_kick_1(x,y)
+        diff = x2 - x
+        if diff<350:
+            print('HIT !!!')
+            diff = 0  
     elif attack_3:
         senshi.attack_punch_1(x,y) 
     elif attack_4:
-        senshi.attack_kick_2(x,y)  
+        senshi.attack_kick_2(x,y)
+ 
     else:
         senshi.idle(x,y)
 
@@ -222,6 +228,8 @@ while run:
             left_2 = False
             crouch_2 = False       
 
+
+    
     x += x_change
     x2 -= x2_change
     if x_change:
