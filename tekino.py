@@ -4,27 +4,6 @@ import anim
 import anim2
 from pygame_functions import *
 from classes import *
-#testing VSCODE GIT
-pygame.init()
-pygame.display.set_caption("Tekino")
-
-clock = pygame.time.Clock()
-run = True
-
-size = width ,height = 1350,700
-left, right, attack_1, attack_1_projectile, attack_2, attack_3, attack_4, crouch, busy = False, False, False, False, False, False, False, False, False
-left_2, right_2, attack_1_2, attack_1_projectile_2, attack_2_2, attack_3_2, attack_4_2, crouch_2, busy_2 = False, False, False, False, False, False, False, False, False
-x = 500
-y = 240
-x2 = 1000
-
-x_projectile = x + 185
-x_projectile2 = x2 - 185 
-y_projectile = 395
-x_change = 0
-x2_change = 0
-t_elapsed = 0
-
 
 senshi = fighter()
 senshi2  = fighter2()
@@ -33,7 +12,7 @@ projectile_ = projectile()
 projectile_2 = projectile2()
 
 def redrawGameWindow():
-    global x_projectile, x_projectile2, x, x2
+    global busy, busy_2, x_projectile, x_projectile2, x, x2, health_f1, health_f2, is_hit, is_hit_2
     stage.idle()
     if left:
         senshi.walkLeft(x,y)
@@ -47,12 +26,25 @@ def redrawGameWindow():
         senshi.attack_kick_1(x,y)
         diff = x2 - x
         if diff<350:
-            print('HIT !!!')
-            diff = 0  
+            health_f2 -= 0.4
+            diff = 0
+            is_hit_2 = True  
     elif attack_3:
         senshi.attack_punch_1(x,y) 
+        diff = x2 - x
+        if diff<300:
+            health_f2 -= 0.2
+            diff = 0
+            is_hit_2 = True 
     elif attack_4:
         senshi.attack_kick_2(x,y)
+        diff = x2 - x
+        if diff<350:
+            health_f2 -= 0.3
+            diff = 0
+            is_hit_2 = True 
+    elif is_hit:
+        senshi.hit(x,y)
  
     else:
         senshi.idle(x,y)
@@ -66,22 +58,58 @@ def redrawGameWindow():
     elif attack_1_2: 
         senshi2.attack_projectile_1(x2,y) 
     elif attack_2_2:  
-        senshi2.attack_kick_1(x2,y) 
+        senshi2.attack_kick_1(x2,y)
+        diff = x2 - x
+        if diff<350:
+            health_f1 -= 0.4
+            diff = 0
+            is_hit = True  
     elif attack_3_2:
-        senshi2.attack_punch_1(x2,y) 
+        senshi2.attack_punch_1(x2,y)
+        diff = x2 - x
+        if diff<300:
+            health_f1 -= 0.2
+            diff = 0
+            is_hit = True 
     elif attack_4_2:
-        senshi2.attack_kick_2(x2,y)  
+        senshi2.attack_kick_2(x2,y)
+        diff = x2 - x
+        if diff<350:
+            health_f1 -= 0.3
+            diff = 0
+            is_hit = True 
+    elif is_hit_2:
+        senshi2.hit(x2,y) 
     else:
         senshi2.idle(x2,y)
 
     if attack_1_projectile:
         projectile_.move(x_projectile, y_projectile)
         x_projectile += 15
+        diff = x2 - x_projectile
+        if diff<50:
+            health_f2 -= 0.25
+            diff = 0
+            is_hit_2 = True 
 
     if attack_1_projectile_2:            
         projectile_2.move(x_projectile2, y_projectile)
         x_projectile2 -= 15
+        diff = x_projectile2 - x
+        if diff<150:
+            health_f1 -= 0.25
+            diff = 0
+            is_hit = True
 
+    rugal_icon = pygame.image.load('rugal/rugal_9000-1.png')
+    rugal_icon_2 = pygame.transform.flip(rugal_icon, True, False)
+
+    win.blit(rugal_icon,(0,0))
+    win. blit(rugal_icon_2,(1220,0))
+    pygame.draw.rect(win, (255,0,0), (130,20,350,35))
+    pygame.draw.rect(win, (255,0,0), (870,20,350,35))
+    pygame.draw.rect(win, (0,255,0), (130,20,350-(5*(350-health_f1)),35))
+    pygame.draw.rect(win, (0,255,0), (870,20,350-(5*(350-health_f2)),35))
     pygame.display.update()
 
 while run:
@@ -102,6 +130,22 @@ while run:
 
     keys = pygame.key.get_pressed()
 
+    if is_hit:
+        anim.crouch.stop()
+        anim.cutter.stop()
+        attack_2 = False
+        anim.punch_1.stop()
+        attack_3 = False
+        anim.kick_1.stop()
+        attack_4 = False
+        anim.repukken.stop()
+        attack_1 = False
+        x_change = 0
+        right = False
+        left = False
+        anim.walkLeft.stop()
+        anim.walkRight.stop()
+        
     if  busy:
         x_change = 0
         right = False
@@ -117,19 +161,24 @@ while run:
             x_projectile = x + 185
             anim.repukken_projectile.elapsed = 0
             busy = False
+            is_hit_2 = False
         if anim.cutter.isFinished():
             anim.cutter.elapsed = 0
             attack_2 = False
             busy = False
+            is_hit_2 = False
         if anim.punch_1.isFinished():
             anim.punch_1.elapsed = 0
             attack_3 = False
             busy = False
+            is_hit_2 = False
         if anim.kick_1.isFinished():
             anim.kick_1.elapsed = 0
             attack_4 = False
             busy = False
-    else:
+            is_hit_2 = False
+
+    if not is_hit and not busy:
         if keys[pygame.K_LEFT] :
             x_change = -10 
             left = True
@@ -165,6 +214,22 @@ while run:
             left = False
             crouch = False
 
+    if is_hit_2:
+        anim2.crouch.stop()
+        anim2.cutter.stop()
+        attack_2_2 = False
+        anim2.punch_1.stop()
+        attack_3_2 = False
+        anim2.kick_1.stop()
+        attack_4_2 = False
+        anim2.repukken.stop()
+        attack_1_2 = False
+        x2_change = 0
+        right_2 = False
+        left_2 = False
+        anim2.walkLeft.stop()
+        anim2.walkRight.stop()
+        
     if  busy_2:
         x2_change = 0
         right_2 = False
@@ -180,19 +245,23 @@ while run:
             x_projectile2 = x2 - 185
             anim2.repukken_projectile.elapsed = 0
             busy_2 = False
+            is_hit = False
         if anim2.cutter.isFinished():
             anim2.cutter.elapsed = 0
             attack_2_2 = False
             busy_2 = False
+            is_hit = False
         if anim2.punch_1.isFinished():
             anim2.punch_1.elapsed = 0
             attack_3_2 = False
             busy_2 = False
+            is_hit = False
         if anim2.kick_1.isFinished():
             anim2.kick_1.elapsed = 0
             attack_4_2 = False
             busy_2 = False
-    else:
+            is_hit = False
+    if not is_hit_2 and not busy_2:
         if keys[pygame.K_c] :
             x2_change = 10 
             left_2 = True

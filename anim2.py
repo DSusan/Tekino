@@ -124,6 +124,12 @@ idle = pyganim.PygAnimation(
     ('rugal/rugal_0-4.png', 200),
     ('rugal/rugal_0-5.png', 200)])
 
+hit = pyganim.PygAnimation(
+   [('rugal_scaled/rugal_5000-0.png', 500),
+    ('rugal_scaled/rugal_5000-10.png', 500),
+    ('rugal_scaled/rugal_5000-20.png', 500),
+    ('rugal_scaled/rugal_5000-21.png', 500),
+    ('rugal_scaled/rugal_5001-0.png', 500)])
 walkRight = walkLeft
 idle.scale((250,400))
 repukken_projectile.scale((150,250))
