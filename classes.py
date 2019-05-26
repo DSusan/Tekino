@@ -1,13 +1,17 @@
-import pyganim
 import pygame
+import pyganim
 import anim
 import anim2
+from pygame_functions import *
+from time import sleep
+
 size = width ,height = 1350,700
 win = pygame.display.set_mode((1350,700))
 health_f1 = 350
 health_f2 = 350
 health_before = 350
 health_before2 = 350
+GameOver = False
 
 pygame.init()
 pygame.display.set_caption("Tekino")
@@ -27,6 +31,13 @@ y_projectile = 395
 x_change = 0
 x2_change = 0
 t_elapsed = 0
+
+font = pygame.font.Font('freesansbold.ttf', 90) 
+text = font.render('PLAYER 1 WINS', True, (255,0,0,))
+text2 = font.render('PLAYER 2 WINS', True, (255,0,0,))
+textRect = text.get_rect()
+textRect.center = (size[0] // 2, size[1] // 2)
+
 class projectile:
     def __init__(self):
         anim.repukken_projectile.loop = False

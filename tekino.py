@@ -1,8 +1,3 @@
-import pygame
-import pyganim
-import anim
-import anim2
-from pygame_functions import *
 from classes import *
 
 senshi = fighter()
@@ -11,8 +6,16 @@ stage = backround()
 projectile_ = projectile()
 projectile_2 = projectile2()
 
+def winscreen(health1, health2):
+    if health1<0:
+        win.blit(text2, textRect)
+    if health2<0:
+        win.blit(text, textRect)
+
 def redrawGameWindow():
-    global busy, busy_2, x_projectile, x_projectile2, x, x2, health_f1, health_f2, is_hit, is_hit_2
+    global busy, busy_2, x_projectile, x_projectile2, x, x2, health_f1, health_f2, is_hit, is_hit_2, health_diff, health_diff2, GameOver
+    health_diff = 350 - (5*(350-health_f1))
+    health_diff2 = 350 - (5*(350-health_f2))
     stage.idle()
     if left:
         senshi.walkLeft(x,y)
@@ -25,7 +28,7 @@ def redrawGameWindow():
     elif attack_2:  
         senshi.attack_kick_1(x,y)
         diff = x2 - x
-        if diff<350:
+        if diff<250:
             health_f2 -= 0.4
             diff = 0
             is_hit_2 = True  
@@ -39,7 +42,7 @@ def redrawGameWindow():
     elif attack_4:
         senshi.attack_kick_2(x,y)
         diff = x2 - x
-        if diff<350:
+        if diff<300:
             health_f2 -= 0.3
             diff = 0
             is_hit_2 = True 
@@ -60,7 +63,7 @@ def redrawGameWindow():
     elif attack_2_2:  
         senshi2.attack_kick_1(x2,y)
         diff = x2 - x
-        if diff<350:
+        if diff<250:
             health_f1 -= 0.4
             diff = 0
             is_hit = True  
@@ -74,7 +77,7 @@ def redrawGameWindow():
     elif attack_4_2:
         senshi2.attack_kick_2(x2,y)
         diff = x2 - x
-        if diff<350:
+        if diff<300:
             health_f1 -= 0.3
             diff = 0
             is_hit = True 
@@ -108,12 +111,16 @@ def redrawGameWindow():
     win. blit(rugal_icon_2,(1220,0))
     pygame.draw.rect(win, (255,0,0), (130,20,350,35))
     pygame.draw.rect(win, (255,0,0), (870,20,350,35))
-    pygame.draw.rect(win, (0,255,0), (130,20,350-(5*(350-health_f1)),35))
-    pygame.draw.rect(win, (0,255,0), (870,20,350-(5*(350-health_f2)),35))
+    pygame.draw.rect(win, (0,255,0), (130,20,health_diff,35))
+    pygame.draw.rect(win, (0,255,0), (870,20,health_diff2,35))
+    if(health_diff < 0 or health_diff2 < 0):
+        GameOver = True
+        winscreen(health_diff, health_diff2)
     pygame.display.update()
+    return health_diff, health_diff2
 
 while run:
-
+    separation = x2 - x
     clock.tick(29)
     
     for event in pygame.event.get():
@@ -183,7 +190,7 @@ while run:
             x_change = -10 
             left = True
             right = False
-        elif keys[pygame.K_RIGHT] :
+        elif keys[pygame.K_RIGHT] and separation > 80 :
             x_change = 10
             left = False
             right = True
@@ -262,7 +269,7 @@ while run:
             busy_2 = False
             is_hit = False
     if not is_hit_2 and not busy_2:
-        if keys[pygame.K_c] :
+        if keys[pygame.K_c] and separation > 80 :
             x2_change = 10 
             left_2 = True
             right_2 = False
@@ -291,20 +298,25 @@ while run:
             x2_change = 0
             attack_2_2 = True
             busy_2 = True
+        elif keys[pygame.K_0] :
+            GameOver = False
+            health_f1 = 350
+            health_f2 = 350
         else:
             x2_change = 0
             right_2 = False
             left_2 = False
             crouch_2 = False       
 
-
-    
     x += x_change
     x2 -= x2_change
     if x_change:
         x_projectile = x + 185
     if x2_change:
         x_projectile2 = x2 - 185
-    
-    redrawGameWindow()
 
+    
+    if not GameOver: 
+        health_diff, health_diff2 = redrawGameWindow()
+    if GameOver:
+        winscreen(health_diff, health_diff2)
