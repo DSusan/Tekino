@@ -6,11 +6,33 @@ stage = backround()
 projectile_ = projectile()
 projectile_2 = projectile2()
 
+black = (0,0,0)
+red = (255,0,0)
+white = (255,255,255)
+
 def winscreen(health1, health2):
     if health1<0:
         win.blit(text2, textRect)
     if health2<0:
         win.blit(text, textRect)
+
+def text_objects(text,color,sizet):
+    if sizet == "small":
+         textSurface = smallfont.render(text, True, color)
+    elif sizet == "medium":
+        textSurface = medfont.render(text, True, color)
+    elif sizet == "larget":
+        textSurface = largefont.render(text, True, color)
+    elif sizet == "largetx":
+        textSurface = largeText.render(text, True, color)
+
+    return  textSurface, textSurface.get_rect()
+
+def message_to_screen(msg,color, y_displace=0, sizet = "small"):
+    textSurf, textRect = text_objects(msg,color, sizet)
+    textRect.center = ((size[0] / 2), (size[1] / 2)+y_displace)
+    win.blit(textSurf, textRect)
+
 
 def redrawGameWindow():
     global busy, busy_2, x_projectile, x_projectile2, x, x2, health_f1, health_f2, is_hit, is_hit_2, health_diff, health_diff2, GameOver
@@ -119,10 +141,34 @@ def redrawGameWindow():
     pygame.display.update()
     return health_diff, health_diff2
 
+def game_intro():
+    intro = True
+    
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    intro = False
+                if event.key == pygame.K_q:
+                    pygame.quit()
+        win.fill(white)
+        message_to_screen('TEKINO',black,10,"largetx")
+        message_to_screen('START GAME',red,120,'small')
+        message_to_screen('Press SpaceBar',black,150,'small')
+        message_to_screen('Exit Game',black,300,'small')
+        message_to_screen('Press Q',black,330,'small')
+        pygame.display.update()
+        clock.tick(15)
+
+game_intro()
+
 while run:
     separation = x2 - x
     clock.tick(29)
-    
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -320,3 +366,4 @@ while run:
         health_diff, health_diff2 = redrawGameWindow()
     if GameOver:
         winscreen(health_diff, health_diff2)
+

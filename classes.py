@@ -5,15 +5,17 @@ import anim2
 from pygame_functions import *
 from time import sleep
 
+pygame.init()
+
+
 size = width ,height = 1350,700
-win = pygame.display.set_mode((1350,700))
+win = pygame.display.set_mode(size)
 health_f1 = 350
 health_f2 = 350
 health_before = 350
 health_before2 = 350
 GameOver = False
 
-pygame.init()
 pygame.display.set_caption("Tekino")
 clock = pygame.time.Clock()
 run = True
@@ -37,6 +39,13 @@ text = font.render('PLAYER 1 WINS', True, (255,0,0,))
 text2 = font.render('PLAYER 2 WINS', True, (255,0,0,))
 textRect = text.get_rect()
 textRect.center = (size[0] // 2, size[1] // 2)
+
+
+largeText = pygame.font.Font('freesansbold.ttf',120)
+smallfont = pygame.font.SysFont("comicsansms", 25)
+medfont = pygame.font.SysFont("comicsansms", 50)
+largefont = pygame.font.SysFont("comicsansms", 80)
+
 
 class projectile:
     def __init__(self):
@@ -151,3 +160,4 @@ class fighter2:
     def hit(self, x_pos, y_pos):
         anim2.hit.play()
         anim2.hit.blit(win,(x_pos,y_pos))
+        
