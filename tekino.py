@@ -35,83 +35,83 @@ def message_to_screen(msg,color, y_displace=0, sizet = "small"):
 
 
 def redrawGameWindow():
-    global busy, busy_2, x_projectile, x_projectile2, x, x2, health_f1, health_f2, is_hit, is_hit_2, health_diff, health_diff2, GameOver
+    global busy, busy_2, x_projectile, x_projectile2, playerPosX, playerPosX2, health_f1, health_f2, is_hit, is_hit_2, health_diff, health_diff2, GameOver
     health_diff = 350 - (5*(350-health_f1))
     health_diff2 = 350 - (5*(350-health_f2))
     stage.idle()
     if left:
-        senshi.walkLeft(x,y)
+        senshi.walkLeft(playerPosX,playerPosY)
     elif right:
-        senshi.walkRight(x,y)
+        senshi.walkRight(playerPosX,playerPosY)
     elif crouch:
-        senshi.crouch(x,y)
+        senshi.crouch(playerPosX,playerPosY)
     elif attack_1: 
-        senshi.attack_projectile_1(x,y) 
+        senshi.attack_projectile_1(playerPosX,playerPosY) 
     elif attack_2:  
-        senshi.attack_kick_1(x,y)
-        diff = x2 - x
+        senshi.attack_kick_1(playerPosX,playerPosY)
+        diff = playerPosX2 - playerPosX
         if diff<250:
             health_f2 -= 0.4
             diff = 0
             is_hit_2 = True  
     elif attack_3:
-        senshi.attack_punch_1(x,y) 
-        diff = x2 - x
+        senshi.attack_punch_1(playerPosX,playerPosY) 
+        diff = playerPosX2 - playerPosX
         if diff<300:
             health_f2 -= 0.2
             diff = 0
             is_hit_2 = True 
     elif attack_4:
-        senshi.attack_kick_2(x,y)
-        diff = x2 - x
+        senshi.attack_kick_2(playerPosX,playerPosY)
+        diff = playerPosX2 - playerPosX
         if diff<300:
             health_f2 -= 0.3
             diff = 0
             is_hit_2 = True 
     elif is_hit:
-        senshi.hit(x,y)
+        senshi.hit(playerPosX,playerPosY)
  
     else:
-        senshi.idle(x,y)
+        senshi.idle(playerPosX,playerPosY)
 
     if left_2:
-        senshi2.walkLeft(x2,y)
+        senshi2.walkLeft(playerPosX2,playerPosY)
     elif right_2:
-        senshi2.walkRight(x2,y)
+        senshi2.walkRight(playerPosX2,playerPosY)
     elif crouch_2:
-        senshi2.crouch(x2,y)
+        senshi2.crouch(playerPosX2,playerPosY)
     elif attack_1_2: 
-        senshi2.attack_projectile_1(x2,y) 
+        senshi2.attack_projectile_1(playerPosX2,playerPosY) 
     elif attack_2_2:  
-        senshi2.attack_kick_1(x2,y)
-        diff = x2 - x
+        senshi2.attack_kick_1(playerPosX2,playerPosY)
+        diff = playerPosX2 - playerPosX
         if diff<250:
             health_f1 -= 0.4
             diff = 0
             is_hit = True  
     elif attack_3_2:
-        senshi2.attack_punch_1(x2,y)
-        diff = x2 - x
+        senshi2.attack_punch_1(playerPosX2,playerPosY)
+        diff = playerPosX2 - playerPosX
         if diff<300:
             health_f1 -= 0.2
             diff = 0
             is_hit = True 
     elif attack_4_2:
-        senshi2.attack_kick_2(x2,y)
-        diff = x2 - x
+        senshi2.attack_kick_2(playerPosX2,playerPosY)
+        diff = playerPosX2 - playerPosX
         if diff<300:
             health_f1 -= 0.3
             diff = 0
             is_hit = True 
     elif is_hit_2:
-        senshi2.hit(x2,y) 
+        senshi2.hit(playerPosX2,playerPosY) 
     else:
-        senshi2.idle(x2,y)
+        senshi2.idle(playerPosX2,playerPosY)
 
     if attack_1_projectile:
         projectile_.move(x_projectile, y_projectile)
         x_projectile += 15
-        diff = x2 - x_projectile
+        diff = playerPosX2 - x_projectile
         if diff<50:
             health_f2 -= 0.25
             diff = 0
@@ -120,7 +120,7 @@ def redrawGameWindow():
     if attack_1_projectile_2:            
         projectile_2.move(x_projectile2, y_projectile)
         x_projectile2 -= 15
-        diff = x_projectile2 - x
+        diff = x_projectile2 - playerPosX
         if diff<150:
             health_f1 -= 0.25
             diff = 0
@@ -163,10 +163,10 @@ def game_intro():
         pygame.display.update()
         clock.tick(15)
 
-game_intro()
+#game_intro()
 
 while run:
-    separation = x2 - x
+    separation = playerPosX2 - playerPosX
     clock.tick(29)
 
     for event in pygame.event.get():
@@ -211,7 +211,7 @@ while run:
             attack_1_projectile =True
         if anim.repukken_projectile.isFinished():
             attack_1_projectile = False
-            x_projectile = x + 185
+            x_projectile = playerPosX + 185
             anim.repukken_projectile.elapsed = 0
             busy = False
             is_hit_2 = False
@@ -295,7 +295,7 @@ while run:
             attack_1_projectile_2 =True
         if anim2.repukken_projectile.isFinished():
             attack_1_projectile_2 = False
-            x_projectile2 = x2 - 185
+            x_projectile2 = playerPosX2 - 185
             anim2.repukken_projectile.elapsed = 0
             busy_2 = False
             is_hit = False
@@ -354,12 +354,21 @@ while run:
             left_2 = False
             crouch_2 = False       
 
-    x += x_change
-    x2 -= x2_change
+    playerPosX += x_change
+    playerPosX2 -= x2_change
+    if playerPosX > size[0]-char_radius:playerPosX = size[0] - char_radius
+    if playerPosX < char_radius/2: playerPosX = char_radius/2
+    if playerPosX < startscrollingPosX:  playerPosX = char_radius
+    elif playerPosX > size[0] - startscrollingPosX: playerPosX = playerPosX - anim.bckg[0] + size[0]
+    else:
+        playerPosX = startscrollingPosX
+        stagePosX += -x_change
+
+
     if x_change:
-        x_projectile = x + 185
+        x_projectile = playerPosX + 185
     if x2_change:
-        x_projectile2 = x2 - 185
+        x_projectile2 = playerPosX2 - 185
 
     
     if not GameOver: 
