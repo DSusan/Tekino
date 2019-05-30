@@ -15,7 +15,7 @@ stage_idle = pyganim.PygAnimation(
 bckg = stage_idle.getMaxSize()
 #print ("width,height")
 #   1800,600
-print (bckg)
+
 punch_1 = pyganim.PygAnimation(
    [('rugal_scaled/rugal_210-0.png', 70),
     ('rugal_scaled/rugal_210-1.png', 70),
