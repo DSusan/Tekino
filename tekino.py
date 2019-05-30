@@ -198,6 +198,27 @@ while run:
         left = False
         anim.walkLeft.stop()
         anim.walkRight.stop()
+    if is_hit_2:
+        anim2.crouch.stop()
+        anim2.cutter.stop()
+        attack_2_2 = False
+        anim2.punch_1.stop()
+        attack_3_2 = False
+        anim2.kick_1.stop()
+        attack_4_2 = False
+        anim2.repukken.stop()
+        attack_1_2 = False
+        x2_change = 0
+        right_2 = False
+        left_2 = False
+        anim2.walkLeft.stop()
+        anim2.walkRight.stop()
+    
+    if is_hit and is_hit_2:
+        is_hit = False
+        is_hit_2 = False
+        busy = False
+        busy_2 = False
         
     if  busy:
         x_change = 0
@@ -266,22 +287,6 @@ while run:
             right = False
             left = False
             crouch = False
-
-    if is_hit_2:
-        anim2.crouch.stop()
-        anim2.cutter.stop()
-        attack_2_2 = False
-        anim2.punch_1.stop()
-        attack_3_2 = False
-        anim2.kick_1.stop()
-        attack_4_2 = False
-        anim2.repukken.stop()
-        attack_1_2 = False
-        x2_change = 0
-        right_2 = False
-        left_2 = False
-        anim2.walkLeft.stop()
-        anim2.walkRight.stop()
         
     if  busy_2:
         x2_change = 0
