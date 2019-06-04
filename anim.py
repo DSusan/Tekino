@@ -1,7 +1,6 @@
 import pyganim
 import pygame
 
-
 stage_idle = pyganim.PygAnimation(
    [('imagenes/stage_0.gif', 200),
     ('imagenes/stage_1.gif', 200),

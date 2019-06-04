@@ -143,7 +143,12 @@ def redrawGameWindow():
 
 def game_intro():
     intro = True
-    
+
+    menuSong = pygame.mixer.music.load("Menu.mp3")
+    pygame.mixer.music.play(-1)
+    b_rugal_pos = colorize(rugal_pos,white)
+    ux = 0
+
     while intro:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -154,16 +159,27 @@ def game_intro():
                     intro = False
                 if event.key == pygame.K_q:
                     pygame.quit()
-        win.fill(white)
-        message_to_screen('TEKINO',black,10,"largetx")
-        message_to_screen('START GAME',red,120,'small')
-        message_to_screen('Press SpaceBar',black,150,'small')
-        message_to_screen('Exit Game',black,300,'small')
-        message_to_screen('Press Q',black,330,'small')
-        pygame.display.update()
+
+        Time = pygame.time.get_ticks()
+        print(Time)
+
+        if (Time < 3900):
+             win.fill(black)
+             win.blit(b_rugal_pos,(0,0))
+
+        else:
+            win.fill(white)
+            win.blit(rugal_pos,(0,0))
+            win.blit(pygame.transform.flip(rugal_pos, True, False),(size[0]-600,0))
+            message_to_screen('TEKINO',black,10,"largetx")
+            message_to_screen('START GAME',red,120,'small')
+            message_to_screen('Press SpaceBar',black,150,'small')
+            message_to_screen('Exit Game',black,300,'small')
+            message_to_screen('Press Q',black,330,'small')
+            pygame.display.update()
         clock.tick(15)
 
-#game_intro()
+game_intro()
 
 while run:
     separation = playerPosX2 - playerPosX

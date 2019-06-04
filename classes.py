@@ -49,7 +49,8 @@ smallfont = pygame.font.SysFont("comicsansms", 25)
 medfont = pygame.font.SysFont("comicsansms", 50)
 largefont = pygame.font.SysFont("comicsansms", 80)
 
-
+rugal_pos = pygame.image.load("rugal_pos.png")
+rugal_pos = pygame.transform.scale(rugal_pos,(600,458))
 
 class projectile:
     def __init__(self):
@@ -172,4 +173,21 @@ class fighter2:
     def hit(self, x_pos, y_pos):
         anim2.hit.play()
         anim2.hit.blit(win,(x_pos,y_pos))
+
+def colorize(image, newColor):
+    """
+    Create a "colorized" copy of a surface (replaces RGB values with the given color, preserving the per-pixel alphas of
+    original).
+    :param image: Surface to create a colorized copy of
+    :param newColor: RGB color to use (original alpha values are preserved)
+    :return: New colorized Surface instance
+    """
+    image = image.copy()
+
+    # zero out RGB values
+    image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
+    # add in new RGB values
+    image.fill(newColor[0:3] + (0,), None, pygame.BLEND_RGBA_ADD)
+
+    return image
         
