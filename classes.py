@@ -23,12 +23,15 @@ run = True
 size = width ,height = 1350,700
 left, right, attack_1, attack_1_projectile, attack_2, attack_3, attack_4, crouch, is_hit, busy = False, False, False, False, False, False, False, False, False, False
 left_2, right_2, attack_1_2, attack_1_projectile_2, attack_2_2, attack_3_2, attack_4_2, crouch_2, is_hit_2, busy_2 = False, False, False, False, False, False, False, False, False, False
-x = 500
-y = 240
-x2 = 1000
+playerPosX = 500
+playerPosY = 240
+playerPosX2 = 1000
+char_radius = 125
+stagePosX = 0 
+startscrollingPosX = size[0]/2
 
-x_projectile = x + 185
-x_projectile2 = x2 - 185 
+x_projectile = playerPosX + 185
+x_projectile2 = playerPosX2 - 185 
 y_projectile = 395
 x_change = 0
 x2_change = 0
@@ -46,6 +49,8 @@ smallfont = pygame.font.SysFont("comicsansms", 25)
 medfont = pygame.font.SysFont("comicsansms", 50)
 largefont = pygame.font.SysFont("comicsansms", 80)
 
+rugal_pos = pygame.image.load("rugal_pos.png")
+rugal_pos = pygame.transform.scale(rugal_pos,(600,458))
 
 class projectile:
     def __init__(self):
@@ -62,17 +67,14 @@ class projectile2:
         anim2.repukken_projectile.play()
         anim2.repukken_projectile.blit(win,(x_pos,y_pos))
 
-class backround:
-    z=0
-    def __init__(self):
-        anim.stage_idle.play()
-    def idle(self):
-        rel_z= self.z % anim.bckg[0]
-        anim.stage_idle.blit(win,(rel_z - anim.bckg[0] ,0))
-        # 1800-1350 = 450
-        if (rel_z < size[0]+450):
-            anim.stage_idle.blit(win,(rel_z-450,0))
-        self.z-=1
+
+    # def idle(self):
+    #     rel_z= self.z % anim.bckg[0]
+    #     anim.stage_idle.blit(win,(rel_z - anim.bckg[0] ,0))
+    #     # 1800-1350 = 450
+    #     if (rel_z < size[0]+450):
+    #         anim.stage_idle.blit(win,(rel_z-450,0))
+    #     self.z-=1
 
 class fighter:
     def __init__(self):
@@ -160,4 +162,21 @@ class fighter2:
     def hit(self, x_pos, y_pos):
         anim2.hit.play()
         anim2.hit.blit(win,(x_pos,y_pos))
+
+def colorize(image, newColor):
+    """
+    Create a "colorized" copy of a surface (replaces RGB values with the given color, preserving the per-pixel alphas of
+    original).
+    :param image: Surface to create a colorized copy of
+    :param newColor: RGB color to use (original alpha values are preserved)
+    :return: New colorized Surface instance
+    """
+    image = image.copy()
+
+    # zero out RGB values
+    image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
+    # add in new RGB values
+    image.fill(newColor[0:3] + (0,), None, pygame.BLEND_RGBA_ADD)
+
+    return image
         
