@@ -12,6 +12,8 @@ white = (255,255,255)
 play_hit = True
 play_hit2 = True
 play_laugh = True
+paused = False
+
 
 def winscreen(health1, health2):
     if health1<0:
@@ -141,7 +143,9 @@ def redrawGameWindow():
     if(health_diff < 0 or health_diff2 < 0):
         GameOver = True
         winscreen(health_diff, health_diff2)
-    pygame.display.update()
+    message_to_screen("Ayuda ¨P¨",white,300,"small")
+    if not paused:
+        pygame.display.update()
     return health_diff, health_diff2
 
 def game_intro():
@@ -187,6 +191,7 @@ def game_intro():
             win.fill(black)
             win.blit(rugal_pos,(0,220))
             win.blit(pygame.transform.flip(rugal_pos, True, False),(size[0]-600,30))
+            win.blit(logo,(515,0))
             message_to_screen('TEKINO',white,10,"largetx")
             message_to_screen('START GAME',red,120,'small')
             message_to_screen('Press SpaceBar',white,150,'small')
@@ -218,6 +223,11 @@ while run:
             if event.key == pygame.K_v:
                 crouch_2 = False
                 anim2.crouch.elapsed = 0
+            if event.key == pygame.K_p:
+                paused = not paused
+                win.blit(pauseMenu,(270,30))
+                pygame.display.update()
+
             
 
     keys = pygame.key.get_pressed()
@@ -395,6 +405,8 @@ while run:
             health_f1 = 350
             health_f2 = 350
             play_laugh = True
+        elif keys[pygame.K_p] :
+            pass
         else:
             x2_change = 0
             right_2 = False
@@ -420,6 +432,6 @@ while run:
         winscreen(health_diff, health_diff2)
         if play_laugh:
           play_laugh = False
-          laughSound.play(3)
+          laughSound.play(0)
 
 

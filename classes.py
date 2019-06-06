@@ -23,7 +23,7 @@ run = True
 size = width ,height = 1350,700
 left, right, attack_1, attack_1_projectile, attack_2, attack_3, attack_4, crouch, is_hit, busy = False, False, False, False, False, False, False, False, False, False
 left_2, right_2, attack_1_2, attack_1_projectile_2, attack_2_2, attack_3_2, attack_4_2, crouch_2, is_hit_2, busy_2 = False, False, False, False, False, False, False, False, False, False
-playerPosX = 500
+playerPosX = 100
 playerPosY = 240
 playerPosX2 = 1000
 char_radius = 125
@@ -51,6 +51,10 @@ largefont = pygame.font.SysFont("comicsansms", 80)
 
 rugal_pos = pygame.image.load("rugal_pos.png")
 rugal_pos = pygame.transform.scale(rugal_pos,(600,458))
+icon = pygame.image.load("icon.png")
+pygame.display.set_icon(icon)
+logo = pygame.image.load("logoi.png")
+pauseMenu = pygame.image.load("pause.png")
 
 hitSound = pygame.mixer.Sound("hit.wav")
 laughSound = pygame.mixer.Sound("laugh_Rugal.wav")
@@ -195,4 +199,5 @@ def colorize(image, newColor):
     image.fill(newColor[0:3] + (0,), None, pygame.BLEND_RGBA_ADD)
 
     return image
+
         
