@@ -134,6 +134,14 @@ hit = pyganim.PygAnimation(
     ('rugal_scaled/rugal_5000-21.png', 500),
     ('rugal_scaled/rugal_5001-0.png', 500)])
 
+men = pyganim.PygAnimation(
+    [('mn/mn_1.png',200),
+     ('mn/mn_2.png',200),
+     ('mn/mn_3.png',200),
+     ('mn/mn_4.png',200),
+     ('mn/mn_5.png',200)]
+)
+
 walkRight = walkLeft
 idle.scale((250,400))
 repukken_projectile.scale((150,250))

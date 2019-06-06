@@ -9,6 +9,7 @@ black = (0,0,0)
 red = (255,0,0)
 white = (255,255,255)
 
+
 def winscreen(health1, health2):
     if health1<0:
         win.blit(text2, textRect)
@@ -160,16 +161,29 @@ def game_intro():
                     pygame.quit()
 
         Time = pygame.time.get_ticks()
-        if (Time < 8900):
+        
+        #if (Time < 8900):
+        if (Time < 3830):
             win.fill(black)
-            win.blit(b_rugal_pos,(0,0))
-            win.blit(pygame.transform.flip(b_rugal_pos, True, False),(size[0]-600,0))
-            pygame.display.update()
+            win.blit(b_rugal_pos,(0,250 - ux))
+            win.blit(pygame.transform.flip(b_rugal_pos, True, False),(size[0]-600,0 + ux))
 
+            anim.men.play()
+            anim.men.blit(win,(230,0))
+            anim.men.blit(win,(500,450))
+            anim.men.blit(win,(30,500))
+            anim.men.blit(win,(800,30))
+            anim.men.blit(win,(1100,530))
+
+            pygame.display.update()
+            ux += 5
+        elif (Time < 3900):
+            win.fill(white)
+            pygame.display.update()
         else:
             win.fill(black)
-            win.blit(rugal_pos,(0,0))
-            win.blit(pygame.transform.flip(rugal_pos, True, False),(size[0]-600,0))
+            win.blit(rugal_pos,(0,220))
+            win.blit(pygame.transform.flip(rugal_pos, True, False),(size[0]-600,30))
             message_to_screen('TEKINO',white,10,"largetx")
             message_to_screen('START GAME',red,120,'small')
             message_to_screen('Press SpaceBar',white,150,'small')
@@ -178,7 +192,11 @@ def game_intro():
             pygame.display.update()
         clock.tick(15)
 
-#game_intro()
+game_intro()
+pygame.mixer.music.stop()
+
+menuSong = pygame.mixer.music.load("stage_sound.mp3")
+pygame.mixer.music.play(-1)
 
 while run:
     anim.stage_idle.play()

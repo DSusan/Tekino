@@ -33,7 +33,7 @@ startscrollingPosX = size[0]/2
 x_projectile = playerPosX + 185
 x_projectile2 = playerPosX2 - 185 
 y_projectile = 395
-x_change = 0
+pl = 0
 x2_change = 0
 t_elapsed = 0
 
@@ -52,6 +52,8 @@ largefont = pygame.font.SysFont("comicsansms", 80)
 rugal_pos = pygame.image.load("rugal_pos.png")
 rugal_pos = pygame.transform.scale(rugal_pos,(600,458))
 
+
+
 class projectile:
     def __init__(self):
         anim.repukken_projectile.loop = False
@@ -67,6 +69,17 @@ class projectile2:
         anim2.repukken_projectile.play()
         anim2.repukken_projectile.blit(win,(x_pos,y_pos))
 
+class backround:
+    # startScrollingPosX 
+    z=0
+    def __init__(self):
+        anim.stage_idle.play()
+        
+    def idle(self):
+        rel_x= stagePosX % anim.bckg[0]
+        anim.stage_idle.blit(win,(rel_x - anim.bckg[0] ,0))
+        if (rel_x < size[0]):
+            anim.stage_idle.blit(win,(rel_x,0))
 
     # def idle(self):
     #     rel_z= self.z % anim.bckg[0]
