@@ -417,6 +417,7 @@ while run:
     playerPosX += x_change
     playerPosX2 -= x2_change
 
+    if playerPosX < 0 : playerPosX = 0
     if playerPosX > size[0]-char_radius:playerPosX = size[0]-char_radius    
     if playerPosX2 > size[0]-char_radius-120:playerPosX2 = size[0]-char_radius-120
 
