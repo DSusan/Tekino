@@ -33,7 +33,7 @@ startscrollingPosX = size[0]/2
 x_projectile = playerPosX + 185
 x_projectile2 = playerPosX2 - 185 
 y_projectile = 395
-pl = 0
+x_change = 0
 x2_change = 0
 t_elapsed = 0
 
@@ -51,6 +51,9 @@ largefont = pygame.font.SysFont("comicsansms", 80)
 
 rugal_pos = pygame.image.load("rugal_pos.png")
 rugal_pos = pygame.transform.scale(rugal_pos,(600,458))
+
+hitSound = pygame.mixer.Sound("hit.wav")
+laughSound = pygame.mixer.Sound("laugh_Rugal.wav")
 
 
 

@@ -9,6 +9,9 @@ black = (0,0,0)
 red = (255,0,0)
 white = (255,255,255)
 
+play_hit = True
+play_hit2 = True
+play_laugh = True
 
 def winscreen(health1, health2):
     if health1<0:
@@ -200,10 +203,8 @@ pygame.mixer.music.play(-1)
 
 while run:
     anim.stage_idle.play()
-    rel_x= stagePosX % anim.bckg[0]
-    anim.stage_idle.blit(win,(rel_x - anim.bckg[0] ,0))
-    if (rel_x < size[0]):
-        anim.stage_idle.blit(win,(rel_x,0))
+    anim.stage_idle.blit(win,(0,0))
+
     separation = playerPosX2 - playerPosX
     clock.tick(29)
 
@@ -222,6 +223,9 @@ while run:
     keys = pygame.key.get_pressed()
 
     if is_hit:
+        if play_hit:
+            play_hit = False
+            hitSound.play()
         anim.crouch.stop()
         anim.cutter.stop()
         attack_2 = False
@@ -304,8 +308,12 @@ while run:
             right = False
             left = False
             crouch = False
+        play_hit = True
 
     if is_hit_2:
+        if play_hit2:
+          play_hit2 = False
+          hitSound.play()
         anim2.crouch.stop()
         anim2.cutter.stop()
         attack_2_2 = False
@@ -386,22 +394,19 @@ while run:
             GameOver = False
             health_f1 = 350
             health_f2 = 350
+            play_laugh = True
         else:
             x2_change = 0
             right_2 = False
             left_2 = False
-            crouch_2 = False       
+            crouch_2 = False   
+        play_hit2 = True    
 
     playerPosX += x_change
     playerPosX2 -= x2_change
-    if playerPosX > size[0]-char_radius:playerPosX = size[0] - char_radius
-    if playerPosX < char_radius: playerPosX = char_radius
-    #if playerPosX < startscrollingPosX:  playerPosX = char_radius
-    elif playerPosX > size[0] - startscrollingPosX: playerPosX = playerPosX - anim.bckg[0] + size[0]
-    else:
-        playerPosX = startscrollingPosX
-        stagePosX += -x_change
 
+    if playerPosX > size[0]-char_radius:playerPosX = size[0]-char_radius    
+    if playerPosX2 > size[0]-char_radius-120:playerPosX2 = size[0]-char_radius-120
 
     if x_change:
         x_projectile = playerPosX + 185
@@ -413,4 +418,8 @@ while run:
         health_diff, health_diff2 = redrawGameWindow()
     if GameOver:
         winscreen(health_diff, health_diff2)
+        if play_laugh:
+          play_laugh = False
+          laughSound.play(3)
+
 
